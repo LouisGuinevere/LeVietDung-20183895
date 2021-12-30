@@ -98,10 +98,4 @@ public class CD extends Media {
 			throw new SQLException();
 		}
     }
-
-    @Override
-    public List getAllMedia() {
-        return null;
-    }
-
 }

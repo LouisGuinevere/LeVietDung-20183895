@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import calculator.RushOrderShippingFeeCalculator;
 import controller.PlaceRushOrderController;
 import common.exception.InvalidDeliveryInfoException;
 import entity.invoice.Invoice;
@@ -96,7 +97,7 @@ public class PlaceRushOrderScreenHandler extends ShippingScreenHandler implement
 		}
 	
 		// calculate shipping fees
-		int shippingFees = getBController().updateShippingFee(order);
+		int shippingFees = getBController().updateShippingFee(order.getAmount());
 		order.setShippingFees(shippingFees);
 		order.setDeliveryInfo(messages);
 		order.setType("Rush Order");
@@ -109,6 +110,16 @@ public class PlaceRushOrderScreenHandler extends ShippingScreenHandler implement
 		InvoiceScreenHandler.setScreenTitle("Invoice Screen");
 		InvoiceScreenHandler.setBController(getBController());
 		InvoiceScreenHandler.show();
+	}
+	
+	/**
+	 * Phuong thuc dung de cap nhat phi giao hang cho don giao hang nhanh
+	 * @param amount Tong gia tri hoa don
+	 * @return Phi giao hang
+	 */
+	public int updateShippingFee(int amount) {
+		RushOrderShippingFeeCalculator cal = new RushOrderShippingFeeCalculator();
+		return cal.calculateShippingFee(amount);
 	}
 
 	/**

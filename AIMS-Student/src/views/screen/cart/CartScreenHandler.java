@@ -37,7 +37,7 @@ public class CartScreenHandler extends BaseScreenHandler {
 	private Label pageTitle;
 
 	@FXML
-	VBox vboxCart;
+	private VBox vboxCart;
 
 	@FXML
 	private Label shippingFees;

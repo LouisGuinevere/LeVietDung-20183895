@@ -16,15 +16,15 @@ public class Configs {
 
 	// demo data
 	public static final String POST_DATA = "{"
-			+ " \"secretKey\": \"BUXj/7/gHHI=\" ,"
+			+ " \"secretKey\": \"BPb3tPTvnYo=\" ,"
 			+ " \"transaction\": {"
 			+ " \"command\": \"pay\" ,"
-			+ " \"cardCode\": \"118609_group1_2020\" ,"
-			+ " \"owner\": \"Group 1\" ,"
+			+ " \"cardCode\": \"kscq1_group20_2021\" ,"
+			+ " \"owner\": \"Group 20\" ,"
 			+ " \"cvvCode\": \"185\" ,"
 			+ " \"dateExpried\": \"1125\" ,"
 			+ " \"transactionContent\": \"Pei debt\" ,"
-			+ " \"amount\": 50000 "
+			+ " \"amount\": 50 "
 			+ "}"
 		+ "}";
 	public static final String TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxMTg2MDlfZ3JvdXAxXzIwMjAiLCJpYXQiOjE1OTkxMTk5NDl9.y81pBkM0pVn31YDPFwMGXXkQRKW5RaPIJ5WW5r9OW-Y";

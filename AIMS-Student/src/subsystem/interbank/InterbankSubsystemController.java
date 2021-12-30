@@ -10,8 +10,9 @@ import common.exception.NotEnoughBalanceException;
 import common.exception.NotEnoughTransactionInfoException;
 import common.exception.SuspiciousTransactionException;
 import common.exception.UnrecognizedException;
-import entity.payment.CreditCard;
 import entity.payment.PaymentTransaction;
+import entity.paymentmethod.CreditCard;
+import entity.paymentmethod.PaymentMethod;
 import utils.Configs;
 import utils.MyMap;
 import utils.Utils;
@@ -25,7 +26,7 @@ public class InterbankSubsystemController {
 
 	private static InterbankBoundary interbankBoundary = new InterbankBoundary();
 
-	public PaymentTransaction refund(CreditCard card, int amount, String contents) {
+	public PaymentTransaction refund(PaymentMethod card, int amount, String contents) {
 		return null;
 	}
 	
@@ -33,7 +34,7 @@ public class InterbankSubsystemController {
 		return ((MyMap) data).toJSON();
 	}
 
-	public PaymentTransaction payOrder(CreditCard card, int amount, String contents) {
+	public PaymentTransaction payOrder(PaymentMethod card, int amount, String contents) {
 		Map<String, Object> transaction = new MyMap();
 
 		try {
@@ -50,6 +51,8 @@ public class InterbankSubsystemController {
 		Map<String, Object> requestMap = new MyMap();
 		requestMap.put("version", VERSION);
 		requestMap.put("transaction", transaction);
+		
+		System.out.print(requestMap);
 
 		String responseText = interbankBoundary.query(Configs.PROCESS_TRANSACTION_URL, generateData(requestMap));
 		MyMap response = null;
@@ -67,7 +70,7 @@ public class InterbankSubsystemController {
 		if (response == null)
 			return null;
 		MyMap transcation = (MyMap) response.get("transaction");
-		CreditCard card = new CreditCard((String) transcation.get("cardCode"), (String) transcation.get("owner"),
+		PaymentMethod card = (PaymentMethod) new CreditCard((String) transcation.get("cardCode"), (String) transcation.get("owner"),
 				Integer.parseInt((String) transcation.get("cvvCode")), (String) transcation.get("dateExpired"));
 		PaymentTransaction trans = new PaymentTransaction((String) response.get("errorCode"), card,
 				(String) transcation.get("transactionId"), (String) transcation.get("transactionContent"),

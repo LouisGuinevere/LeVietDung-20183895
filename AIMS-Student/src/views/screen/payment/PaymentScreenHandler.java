@@ -1,12 +1,14 @@
 package views.screen.payment;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 import controller.PaymentController;
 import entity.cart.Cart;
 import common.exception.PlaceOrderException;
 import entity.invoice.Invoice;
+import entity.order.Order;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,13 +64,13 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 	@FXML
 	private TextField securityCode;
 
-	void confirmToPayOrder() throws IOException{
+	void confirmToPayOrder() throws IOException, SQLException{
 		String contents = "pay order";
 		PaymentController ctrl = (PaymentController) getBController();
-		Map<String, String> response = ctrl.payOrder(invoice.getAmount(), contents, cardNumber.getText(), holderName.getText(),
+		Map<String, String> response = ctrl.payOrder(invoice, contents, cardNumber.getText(), holderName.getText(),
 				expirationDate.getText(), securityCode.getText());
 
-		BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, Configs.RESULT_SCREEN_PATH, response.get("RESULT"), response.get("MESSAGE") );
+		BaseScreenHandler resultScreen = new ResultScreenHandler(this.stage, Configs.RESULT_SCREEN_PATH, response.get("RESULT"), response.get("MESSAGE"), invoice.getOrder());
 		resultScreen.setPreviousScreen(this);
 		resultScreen.setHomeScreenHandler(homeScreenHandler);
 		resultScreen.setScreenTitle("Result Screen");

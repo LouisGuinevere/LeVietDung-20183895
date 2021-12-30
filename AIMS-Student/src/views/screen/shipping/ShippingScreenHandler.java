@@ -130,10 +130,10 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 			return;
 		}
 		// calculate shipping fees
-		int shippingFees = getBController().calculateShippingFee(order);
+		int shippingFees = getBController().calculateShippingFee(order.getAmount());
 		order.setShippingFees(shippingFees);
 		order.setDeliveryInfo(messages);
-		order.setType("Normal Order");
+		order.setType("Casual Order");
 		
 		// create invoice screen
 		Invoice invoice = getBController().createInvoice(order);

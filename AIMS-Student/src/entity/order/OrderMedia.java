@@ -1,5 +1,9 @@
 package entity.order;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import entity.db.AIMSDB;
 import entity.media.Media;
 
 public class OrderMedia {
@@ -47,4 +51,19 @@ public class OrderMedia {
         this.price = price;
     }
 
+    /**
+     * Phuong thuc dung de luu thong tin ve cac san pham co trong don hang
+     * @param id id cua don hang
+     */
+    public void saveOrderMedia(int id) {
+    	String sql = "INSERT INTO OrderMedia values (" + getMedia().getId() + ", " + id + ", " 
+				+ getPrice() + ", " + getQuantity() + ");";
+		try {
+		    Statement stm = AIMSDB.getConnection().createStatement();
+			stm.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

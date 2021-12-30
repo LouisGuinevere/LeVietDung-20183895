@@ -8,8 +8,10 @@ import common.exception.InvalidCardException;
 import common.exception.PaymentException;
 import common.exception.UnrecognizedException;
 import entity.cart.Cart;
-import entity.payment.CreditCard;
+import entity.invoice.Invoice;
 import entity.payment.PaymentTransaction;
+import entity.paymentmethod.CreditCard;
+import entity.paymentmethod.PaymentMethod;
 import subsystem.InterbankInterface;
 import subsystem.InterbankSubsystem;
 
@@ -26,7 +28,7 @@ public class PaymentController extends BaseController {
 	/**
 	 * Represent the card used for payment
 	 */
-	private CreditCard card;
+	private PaymentMethod card;
 
 	/**
 	 * Represent the Interbank subsystem
@@ -81,19 +83,24 @@ public class PaymentController extends BaseController {
 	 * @return {@link java.util.Map Map} represent the payment result with a
 	 *         message.
 	 */
-	public Map<String, String> payOrder(int amount, String contents, String cardNumber, String cardHolderName,
+	public Map<String, String> payOrder(Invoice invoice, String contents, String cardNumber, String cardHolderName,
 			String expirationDate, String securityCode) {
 		Map<String, String> result = new Hashtable<String, String>();
 		result.put("RESULT", "PAYMENT FAILED!");
 		try {
-			this.card = new CreditCard(cardNumber, cardHolderName, Integer.parseInt(securityCode),
+			this.card = (PaymentMethod) new CreditCard(cardNumber, cardHolderName, Integer.parseInt(securityCode),
 					getExpirationDate(expirationDate));
 
 			this.interbank = new InterbankSubsystem();
-			PaymentTransaction transaction = interbank.payOrder(card, amount, contents);
+			PaymentTransaction transaction = interbank.payOrder(card, invoice.getAmount(), contents);
+			
+			invoice.getOrder().saveOrder();
+			invoice.saveInvoice();
+			card.saveCard();
+			transaction.saveTransaction(invoice.getOrder().getId());
 
 			result.put("RESULT", "PAYMENT SUCCESSFUL!");
-			result.put("MESSAGE", "You have succesffully paid the order!");
+			result.put("MESSAGE", "You have succesfully paid the order!");
 		} catch (PaymentException | UnrecognizedException ex) {
 			result.put("MESSAGE", ex.getMessage());
 		}

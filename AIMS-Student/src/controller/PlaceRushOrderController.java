@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import calculator.CasualOrderShippingFeeCalculator;
+import calculator.RushOrderShippingFeeCalculator;
 import common.exception.InvalidDeliveryInfoException;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
@@ -29,7 +31,7 @@ public class PlaceRushOrderController extends PlaceOrderController {
 	 /**
      * Thuoc tinh giup log ra thong tin ra console
      */
-    private static Logger LOGGER = utils.Utils.getLogger(PlaceOrderController.class.getName());
+    private static Logger LOGGER = Utils.getLogger(PlaceOrderController.class.getName());
 
     /**
      * Phuong thuc kiem tra trang thai ton kho cua san pham khi nguoi dung tao Rush Order
@@ -51,7 +53,7 @@ public class PlaceRushOrderController extends PlaceOrderController {
             OrderMedia orderMedia = new OrderMedia(cartMedia.getMedia(), 
                                                    cartMedia.getQuantity(), 
                                                    cartMedia.getPrice());    
-            order.getlstOrderMedia().add(orderMedia);
+            order.addOrderMedia(orderMedia);
         }
         return order;
     }
@@ -220,16 +222,13 @@ public class PlaceRushOrderController extends PlaceOrderController {
     	return true;
     }
     
-
     /**
-     * Phuong thuc cap nhat phi giao hang cho hoa don
-     * @param order: Don dat hang cua khach hang
-     * @return shippingFee
+     * Phuong thuc tinh phi giao hang cho don hang nhanh
+     * @param amount Tong chi phi hoa don
+     * @return Phi giao hang
      */
-    public int updateShippingFee(Order order){
-        Random rand = new Random();
-        int fees = (int)( ( (rand.nextFloat()*10)/100 ) * order.getAmount() );
-        LOGGER.info("Order Amount: " + order.getAmount() + " -- Shipping Fees: " + fees);
-        return fees;
-    }
+    public int updateShippingFee(int amount) {
+		RushOrderShippingFeeCalculator cal = new RushOrderShippingFeeCalculator();
+		return cal.calculateShippingFee(amount);
+	}
 }

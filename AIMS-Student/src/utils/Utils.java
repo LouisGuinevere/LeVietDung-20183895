@@ -30,6 +30,11 @@ public class Utils {
 		return Logger.getLogger(className);
 	}
 
+	/**
+	 * Phuong thuc dung de dinh dang tien vietnam
+	 * @param num gia tri tien o dang int
+	 * @return dinh dang String
+	 */
 	public static String getCurrencyFormat(int num) {
 		Locale vietname = new Locale("vi", "VN");
 		NumberFormat defaultFormat = NumberFormat.getCurrencyInstance(vietname);

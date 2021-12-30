@@ -85,16 +85,6 @@ public class Media {
         return medium;
     }
 
-    public void updateMediaFieldById(String tbname, int id, String field, Object value) throws SQLException {
-        Statement stm = AIMSDB.getConnection().createStatement();
-        if (value instanceof String){
-            value = "\"" + value + "\"";
-        }
-        stm.executeUpdate(" update " + tbname + " set" + " " 
-                          + field + "=" + value + " " 
-                          + "where id=" + id + ";");
-    }
-
     // getter and setter 
     public int getId() {
         return this.id;
@@ -166,6 +156,16 @@ public class Media {
             ", type='" + type + "'" +
             ", imageURL='" + imageURL + "'" +
             "}";
-    }    
+    }
 
+    /**
+     * Phuong thuc cap nhat lai so luong hang ton kho cua san pham sau khi khach hang dat hang thanh cong
+     * @param quantity so luong thay doi
+     * @throws SQLException
+     */
+	public void updateQuanity(int quantity) throws SQLException {
+		String sql = "UPDATE Media SET quantity = quantity - " + quantity + " where id = " + id + ";";
+		Statement stm = AIMSDB.getConnection().createStatement();
+		stm.executeUpdate(sql);	
+	}    
 }

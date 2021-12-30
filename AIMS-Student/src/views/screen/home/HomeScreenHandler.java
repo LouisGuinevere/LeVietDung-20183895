@@ -181,7 +181,4 @@ public class HomeScreenHandler extends BaseScreenHandler implements Initializabl
         });
         menuButton.getItems().add(position, menuItem);
     }
-
-    
-    
 }

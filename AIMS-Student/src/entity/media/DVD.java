@@ -133,9 +133,4 @@ public class DVD extends Media {
             throw new SQLException();
         }
     }
-
-    @Override
-    public List getAllMedia() {
-        return null;
-    }
 }

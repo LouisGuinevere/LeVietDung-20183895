@@ -4,7 +4,7 @@ import common.exception.UnrecognizedException;
 import utils.API;
 
 public class InterbankBoundary {
-
+	
 	String query(String url, String data) {
 		String response = null;
 		try {
@@ -15,5 +15,4 @@ public class InterbankBoundary {
 		}
 		return response;
 	}
-
 }

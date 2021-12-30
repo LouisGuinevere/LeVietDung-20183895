@@ -19,9 +19,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import entity.payment.CreditCard;
-import entity.payment.PaymentTransaction;
-
 /**
  * Class cung cap cac phuong thuc gui request len server va nhan du lieu tra ve
  * @author nguyenlm
@@ -38,6 +35,16 @@ public class API {
 	 */
 	private static Logger LOGGER = Utils.getLogger(Utils.class.getName());
 
+	/**
+	 * Phuong thuc dung de thiet lap ket noi toi API
+	 * @param url request url
+	 * @param method request method
+	 * @param token authorization token
+	 * @return HTTPURLConnection Object bieu trung cho ket noi toi API
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws ProtocolException
+	 */
 	private static HttpURLConnection setupConnection(String url, String method, String token)
 			throws MalformedURLException, IOException, ProtocolException {
 		LOGGER.info("Request URL: " + url + "\n");
@@ -51,6 +58,12 @@ public class API {
 		return conn;
 	}
 
+	/**
+	 * Phuong thuc dung de xu ly thong diep tra ve tu API
+	 * @param conn Doi tuong HttpURLConnection bieu trung cho ket noi toi API
+	 * @return thong diep tra ve tu API
+	 * @throws IOException
+	 */
 	private static String readResponse(HttpURLConnection conn) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String inputLine;
@@ -73,7 +86,7 @@ public class API {
 	public static String get(String url, String token) throws Exception {
 		
 		//Phan 1: Setup
-		HttpURLConnection conn = setupConnection(url, "GET", token);
+		HttpURLConnection conn = setupConnection(url, "PATCH", token);
 		
 		//Phan 2: Doc du lieu tra ve tu server
 		return readResponse(conn);

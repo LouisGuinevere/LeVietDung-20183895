@@ -1,5 +1,9 @@
 package entity.invoice;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import entity.db.AIMSDB;
 import entity.order.Order;
 
 public class Invoice {
@@ -27,7 +31,17 @@ public class Invoice {
         return amount;
     }
 
-    public void saveInvoice(){
-        
+    /**
+     * Phuong thuc dung de luu hoa don vao trong database
+     */
+    public void saveInvoice() {
+    	String sql = "INSERT INTO Invoice(totalAmount, orderID) values(" + amount + ", " + order.getId() + ");";
+        try {
+            Statement stm = AIMSDB.getConnection().createStatement();
+			stm.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

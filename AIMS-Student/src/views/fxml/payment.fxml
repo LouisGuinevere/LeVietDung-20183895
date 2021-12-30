@@ -43,7 +43,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="cardNumber" text="118609_group1_2020">
+            <TextField fx:id="cardNumber" text="kscq1_group20_2021">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
@@ -53,7 +53,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="holderName" text="Group 1">
+            <TextField fx:id="holderName" text="Group 20">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
@@ -73,7 +73,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="securityCode" text="185">
+            <TextField fx:id="securityCode" text="877">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
